@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ElementType, type ReactNode } from "react";
 
-export const WHATSAPP_URL =
-  "https://api.whatsapp.com/send?phone=5527999552299&utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAacFfi7LI8JzFPXkl0P-7poP3CPHP_ix5uPLnE3yJH6noXIJgoLshSRjDJfdOA_aem_lM6F6foncQsjT89V10o4UQ";
+const WHATSAPP_MESSAGE = "Olá! Gostaria de agendar uma avaliação com o Dr. Igor Lopardi.";
+
+export const WHATSAPP_URL = `https://wa.me/5527999552299?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 
 export const MAPS_URL =
   "https://www.google.com/maps/search/?api=1&query=" +
@@ -61,9 +62,9 @@ export function Reveal({
   children: ReactNode;
   className?: string;
   delay?: number;
-  as?: "div" | "section" | "article" | "li";
+  as?: ElementType;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -78,16 +79,16 @@ export function Reveal({
           }
         }
       },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+      { threshold: 0.08, rootMargin: "0px 0px -6% 0px" },
     );
     io.observe(el);
     return () => io.disconnect();
   }, []);
 
-  const Comp = Tag as "div";
+  const Comp = Tag as ElementType;
   return (
     <Comp
-      ref={ref}
+      ref={ref as never}
       className={`reveal ${visible ? "is-visible" : ""} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
@@ -96,36 +97,23 @@ export function Reveal({
   );
 }
 
-/** Placeholder editorial para fotografias reais ainda não fornecidas. */
-export function PhotoPlaceholder({
-  label,
-  className = "",
+/** Moldura padronizada para fotografia clínica — mesmo ratio, radius e tratamento. */
+export function ClinicalFrame({
+  src,
+  alt,
   ratio = "4 / 5",
+  className = "",
+  objectPosition = "center",
 }: {
-  label: string;
-  className?: string;
+  src: string;
+  alt: string;
   ratio?: string;
+  className?: string;
+  objectPosition?: string;
 }) {
   return (
-    <div
-      role="img"
-      aria-label={label}
-      className={`relative overflow-hidden bg-sage/60 ${className}`}
-      style={{ aspectRatio: ratio }}
-    >
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 opacity-70"
-        style={{
-          backgroundImage:
-            "radial-gradient(120% 90% at 20% 0%, rgba(255,255,255,.85) 0%, rgba(255,255,255,0) 55%), radial-gradient(90% 80% at 100% 100%, rgba(124,177,189,.55) 0%, rgba(124,177,189,0) 60%)",
-        }}
-      />
-      <div className="absolute inset-0 flex items-start p-6">
-        <span className="max-w-[26ch] text-[13px] font-medium leading-relaxed text-primary/70">
-          {label}
-        </span>
-      </div>
+    <div className={`frame ${className}`} style={{ aspectRatio: ratio }}>
+      <img src={src} alt={alt} loading="lazy" className="frame-img" style={{ objectPosition }} />
     </div>
   );
 }
