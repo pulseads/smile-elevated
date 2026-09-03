@@ -31,14 +31,13 @@ export function FaqAccordion() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="border-t border-[color-mix(in_oklch,var(--color-primary)_12%,transparent)]">
       {ITEMS.map((item, i) => {
         const isOpen = open === i;
         return (
           <div
             key={item.q}
-            className="card-surface overflow-hidden"
-            style={{ borderRadius: 20 }}
+            className="border-b border-[color-mix(in_oklch,var(--color-primary)_12%,transparent)]"
           >
             <h3>
               <button
@@ -47,13 +46,13 @@ export function FaqAccordion() {
                 aria-controls={`faq-panel-${i}`}
                 id={`faq-trigger-${i}`}
                 onClick={() => setOpen(isOpen ? null : i)}
-                className="flex w-full items-center justify-between gap-6 px-6 py-5 text-left text-[17px] font-semibold text-primary md:px-8 md:py-6 md:text-[19px]"
+                className="flex min-h-[68px] w-full items-center justify-between gap-6 py-6 text-left text-[17px] leading-[1.4] font-semibold text-primary transition-colors hover:text-primary/70 md:text-[20px]"
               >
                 {item.q}
                 <span
                   aria-hidden="true"
-                  className={`grid h-9 w-9 shrink-0 place-items-center rounded-full border border-border transition-transform duration-300 ${
-                    isOpen ? "rotate-45 bg-sage/60" : ""
+                  className={`grid h-10 w-10 shrink-0 place-items-center rounded-full border border-border transition-all duration-300 ${
+                    isOpen ? "rotate-45 border-transparent bg-sage/70" : ""
                   }`}
                 >
                   <svg width="14" height="14" viewBox="0 0 14 14">
@@ -66,10 +65,15 @@ export function FaqAccordion() {
               id={`faq-panel-${i}`}
               role="region"
               aria-labelledby={`faq-trigger-${i}`}
-              hidden={!isOpen}
-              className="px-6 pb-6 text-[16px] leading-[1.6] text-muted-foreground md:px-8 md:pb-8 md:pr-16"
+              className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-400 ${
+                isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+              }`}
             >
-              {item.a}
+              <div className="overflow-hidden">
+                <p className="max-w-[62ch] pb-7 text-[16px] leading-[1.7] text-muted-foreground">
+                  {item.a}
+                </p>
+              </div>
             </div>
           </div>
         );
