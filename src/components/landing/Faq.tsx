@@ -1,0 +1,83 @@
+import { useState } from "react";
+
+const ITEMS = [
+  {
+    q: "Como funciona a primeira consulta?",
+    a: "A primeira consulta é o momento de conhecer você, entender suas principais queixas, avaliar sua saúde bucal e identificar as possibilidades de tratamento para o seu caso.",
+  },
+  {
+    q: "O tratamento é definido na primeira consulta?",
+    a: "Cada caso é diferente. Após a avaliação, você recebe orientações sobre as possibilidades de tratamento e os próximos passos.",
+  },
+  {
+    q: "Preciso saber qual tratamento quero antes de agendar?",
+    a: "Não. Você não precisa chegar ao consultório sabendo qual procedimento realizar. A avaliação existe justamente para entender o que você precisa.",
+  },
+  {
+    q: "O Dr. Igor atende tratamentos estéticos?",
+    a: "Sim. O consultório oferece tratamentos voltados à estética do sorriso, além de soluções para saúde bucal e reabilitação oral.",
+  },
+  {
+    q: "Onde fica o consultório?",
+    a: "O consultório está localizado na Praia da Costa, em Vila Velha — ES.",
+  },
+  {
+    q: "Como posso agendar?",
+    a: "Entre em contato pelo WhatsApp e solicite seu atendimento.",
+  },
+];
+
+export function FaqAccordion() {
+  const [open, setOpen] = useState<number | null>(0);
+
+  return (
+    <div className="border-t border-[color-mix(in_oklch,var(--color-primary)_12%,transparent)]">
+      {ITEMS.map((item, i) => {
+        const isOpen = open === i;
+        return (
+          <div
+            key={item.q}
+            className="border-b border-[color-mix(in_oklch,var(--color-primary)_12%,transparent)]"
+          >
+            <h3>
+              <button
+                type="button"
+                aria-expanded={isOpen}
+                aria-controls={`faq-panel-${i}`}
+                id={`faq-trigger-${i}`}
+                onClick={() => setOpen(isOpen ? null : i)}
+                className="flex min-h-[68px] w-full items-center justify-between gap-6 py-6 text-left text-[17px] leading-[1.4] font-semibold text-primary transition-colors hover:text-primary/70 md:text-[20px]"
+              >
+                {item.q}
+                <span
+                  aria-hidden="true"
+                  className={`grid h-10 w-10 shrink-0 place-items-center rounded-full border border-border transition-all duration-300 ${
+                    isOpen ? "rotate-45 border-transparent bg-sage/70" : ""
+                  }`}
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14">
+                    <path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="1.6" fill="none" />
+                  </svg>
+                </span>
+              </button>
+            </h3>
+            <div
+              id={`faq-panel-${i}`}
+              role="region"
+              aria-labelledby={`faq-trigger-${i}`}
+              className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-400 ${
+                isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+              }`}
+            >
+              <div className="overflow-hidden">
+                <p className="max-w-[62ch] pb-7 text-[16px] leading-[1.7] text-muted-foreground">
+                  {item.a}
+                </p>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
