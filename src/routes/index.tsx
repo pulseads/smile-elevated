@@ -717,7 +717,7 @@ function LandingPage() {
                   as="li"
                   key={c.src}
                   delay={i * 70}
-                  className={i < 2 ? "lg:col-span-3" : "lg:col-span-2"}
+                  className="lg:col-span-2"
                 >
                   <figure className="panel group h-full overflow-hidden bg-background">
                     <ClinicalFrame
