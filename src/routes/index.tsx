@@ -470,17 +470,18 @@ function LandingPage() {
                 >
                   <article className="panel flex h-full flex-col overflow-hidden bg-background">
                     <div
-                      className="frame !rounded-none !border-0"
-                      style={{ aspectRatio: t.span ? "16 / 9" : "4 / 3" }}
+                      className="frame !rounded-none !border-0 bg-[color-mix(in_oklch,var(--color-primary)_5%,transparent)]"
+                      style={{ aspectRatio: "1 / 1" }}
                     >
                       <img
                         src={t.image}
                         alt={t.imageAlt}
                         loading="lazy"
                         className="frame-img"
-                        style={{ objectPosition: "center" }}
+                        style={{ objectFit: "contain", objectPosition: "center" }}
                       />
                     </div>
+
                     <div className="flex flex-1 flex-col gap-5 p-7 md:p-9">
                       <div className="flex items-baseline gap-5">
                         <span aria-hidden="true" className="num-index">
@@ -716,15 +717,17 @@ function LandingPage() {
                   as="li"
                   key={c.src}
                   delay={i * 70}
-                  className={i < 2 ? "lg:col-span-3" : "lg:col-span-2"}
+                  className="lg:col-span-2"
                 >
                   <figure className="panel group h-full overflow-hidden bg-background">
                     <ClinicalFrame
                       src={c.src}
                       alt={c.alt}
-                      ratio={i < 2 ? "4 / 3" : "4 / 5"}
-                      className="!rounded-none !border-0"
+                      ratio="1 / 1"
+                      fit="contain"
+                      className="!rounded-none !border-0 bg-[color-mix(in_oklch,var(--color-primary)_5%,transparent)]"
                     />
+
                     <figcaption className="flex items-baseline gap-4 p-6">
                       <span
                         aria-hidden="true"
