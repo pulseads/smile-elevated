@@ -104,16 +104,25 @@ export function ClinicalFrame({
   ratio = "4 / 5",
   className = "",
   objectPosition = "center",
+  fit = "cover",
 }: {
   src: string;
   alt: string;
   ratio?: string;
   className?: string;
   objectPosition?: string;
+  fit?: "cover" | "contain";
 }) {
   return (
     <div className={`frame ${className}`} style={{ aspectRatio: ratio }}>
-      <img src={src} alt={alt} loading="lazy" className="frame-img" style={{ objectPosition }} />
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        className="frame-img"
+        style={{ objectPosition, objectFit: fit }}
+      />
     </div>
   );
 }
+
