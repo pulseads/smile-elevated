@@ -723,9 +723,11 @@ function LandingPage() {
                     <ClinicalFrame
                       src={c.src}
                       alt={c.alt}
-                      ratio={i < 2 ? "4 / 3" : "4 / 5"}
-                      className="!rounded-none !border-0"
+                      ratio="1 / 1"
+                      fit="contain"
+                      className="!rounded-none !border-0 bg-[color-mix(in_oklch,var(--color-primary)_5%,transparent)]"
                     />
+
                     <figcaption className="flex items-baseline gap-4 p-6">
                       <span
                         aria-hidden="true"
